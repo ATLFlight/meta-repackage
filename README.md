@@ -7,6 +7,9 @@ This is useful when you have to create proprietary bnary packages and then
 provide the packages to a community build that relies on the proprietary 
 binary packages.
 
+The intention is you can have a full build with either the meta-myorg or the
+meta-myorg-community layer.
+
 ### local.conf
 
 The local.conf on both the build exporting the packages and the build importing
@@ -25,7 +28,7 @@ LICENSE_FLAGS_WHITELIST += "commercial"
 
 You can create a wrapper class to add your specific organizational info.
 
-### myorg-export-package.bbclass:
+### meta-myorg/classes/myorg-export-package.bbclass:
 ```
 inherit export-package.bbclass
 
@@ -72,7 +75,7 @@ will have a dependency on this package.
 
 You can create a wrapper class to add your specific organizational info.
 
-meta-myorg/classes/myorg-import-package.bbclass:
+meta-myorg-community/classes/myorg-import-package.bbclass:
 ```
 inherit import-package.bbclass
 LICENSE          = "Myorg-Redistributable"
