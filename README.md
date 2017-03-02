@@ -32,7 +32,7 @@ You can create a wrapper class to add your specific organizational info.
 ```
 inherit export-package.bbclass
 
-LICENSE          = "Myorg-Redistributable"
+LICENSE = "Myorg-Redistributable"
 LIC_FILES_CHKSUM = "file://${PREBUILT_DIR}/LICENSE;md5=dddddddddddddddddddddddddddddddd"
 LICENSE_FLAGS = "commercial"
 NO_GENERIC_LICENSE[Myorg-Redistributable] = "LICENSE"
@@ -78,7 +78,7 @@ You can create a wrapper class to add your specific organizational info.
 meta-myorg-community/classes/myorg-import-package.bbclass:
 ```
 inherit import-package.bbclass
-LICENSE          = "Myorg-Redistributable"
+LICENSE = "Myorg-Redistributable"
 LIC_FILES_CHKSUM = "file://${PREBUILT_DIR}/LICENSE;md5=dddddddddddddddddddddddddddddddd"
 LICENSE_FLAGS = "commercial"
 NO_GENERIC_LICENSE[Myorg-Redistributable] = "LICENSE"
