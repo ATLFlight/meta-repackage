@@ -28,7 +28,7 @@ LICENSE_FLAGS_WHITELIST += "commercial"
 
 You can create a wrapper class to add your specific organizational info.
 
-### meta-myorg/classes/myorg-export-package.bbclass:
+meta-myorg/classes/myorg-export-package.bbclass:
 ```
 inherit export-package.bbclass
 
