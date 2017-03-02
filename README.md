@@ -45,7 +45,7 @@ IMPORT_LICENSE_PKGNAME = "myorg-license-redistributable"
 ### Exported packages
 You will need the following for each exported package:
 
-meta-myorg/recipes-bsp/foo.bb:
+meta-myorg/recipes-bsp/foo/foo_git.bb:
 ```
 inherit myorg-export-package.bbclass
 
@@ -85,11 +85,10 @@ NO_GENERIC_LICENSE[Myorg-Redistributable] = "LICENSE"
 ```
 
 ### Imported packages
-You will need the following for each imported package:
+You will need the following minimum for each imported package:
 
-meta-myorg-community/recipes-bsp/foo.bb:
+meta-myorg-community/recipes-bsp/foo/foo.bb:
 ```
 inherit myorg-import-package
-
 ...
 ```
