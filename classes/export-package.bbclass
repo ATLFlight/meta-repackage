@@ -4,7 +4,6 @@
 
 # This class has been designed to work with ipk packages
 # but could be extended to other package types
-PKG_TYPE = "ipk"
 
 LICENSE       = "CLOSED"
 LICENSE_FLAGS = "commercial"
@@ -12,6 +11,8 @@ LICENSE_FLAGS = "commercial"
 # name of the package containing the license text
 # Usually in /usr/share/...
 IMPORT_LICENSE_PKGNAME = ""
+
+EXPORTS_DIR = "${WORKDIR}/export-ipks"
 
 python() {
     lic_pkg = d.getVar('IMPORT_LICENSE_PKGNAME', True)
@@ -32,13 +33,13 @@ python do_package_write_prebuilt() {
     packages = d.getVar('PACKAGES', True) or ""
     workdir = d.getVar('WORKDIR', True)
     pkgarch = d.getVar('PACKAGE_ARCH', True)
-    destdir = d.getVar('PREBUILT_DIR', True)
+    destdir = d.getVar('EXPORTS_DIR', True)
     curdir = os.getcwd()
     os.chdir(os.path.join(workdir, "deploy-ipks", pkgarch))
 
     # Do not copy dbg packages
     pkgs = []
-    for p in glob.glob("*.${PKG_TYPE}"):
+    for p in glob.glob('*.ipk'):
         if "-dbg_" not in p:
             shutil.copyfile(p, os.path.join(destdir, p))
             pkg = p.split("_")[0]
@@ -74,18 +75,17 @@ python do_package_write_prebuilt() {
 
 do_package_write_prebuilt[nostamp] = "1"
 
+SSTATETASKS += "do_package_write_prebuilt"
+
+python do_package_write_prebuilt_setscene () {
+    sstate_setscene(d)
+}
+
 addtask do_package_write_prebuilt before do_package_write after do_package_write_ipk
 do_build[recrdeptask] += "do_package_write_prebuilt"
 
-python clean_prebuilt() {
-    pn = d.getVar('PN', True)
-    destdir = d.getVar('PREBUILT_DIR', True)
-    pkgs = os.path.join(destdir, pn+".pkgs")
-    if os.path.exists(pkgs):
-        pkglist = open(pkgs, "r").read().split()
-        for p in pkglist:
-            os.remove(os.path.join(destdir, p))
-        os.remove(pkgs)
-}
+do_package_write_prebuilt[dirs] = "${EXPORTS_DIR}"
+do_package_write_prebuilt[sstate-inputdirs] = "${EXPORTS_DIR}"
+do_package_write_prebuilt[sstate-outputdirs] = "${PREBUILT_DIR}"
+addtask do_package_write_prebuilt_setscene
 
-CLEANFUNCS += "clean_prebuilt"
