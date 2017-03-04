@@ -7,15 +7,10 @@
 PKG_TYPE = "ipk"
 
 # Define the license info for the imported packages
-LICENSE       = "Proprietary-Redistributable"
-LICENSE_FLAGS = "commercial"
-NO_GENERIC_LICENSE[Proprietary-Redistributable] = "LICENSE"
-
-# Must provide LIC_FILES_CHKSUM
-# LIC_FILES_CHKSUM = "file://${PREBUILT_DIR}/LICENSE;md5=???"
+LICENSE = "CLOSED"
+LICENSE_FLAGS += "commercial"
 
 # name of the package containing the license text
-# Usually in /usr/share/...
 IMPORT_LICENSE_PKGNAME = ""
 
 # Default package version
@@ -72,7 +67,7 @@ python() {
     srcuri = d.getVar('SRC_URI', False)
     #bb.warn("SRC_URI: "+srcuri)
 
-    for v in [ 'SECTION', 'MAINTAINER', 'DESCRIPTION', 'PROVIDES', 'DEPENDS' ]:
+    for v in [ 'SECTION', 'MAINTAINER', 'DESCRIPTION', 'PROVIDES' ]:
         if pkginfo[v]:
             d.setVar(v, pkginfo[v])
 
