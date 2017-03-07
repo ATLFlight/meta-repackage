@@ -60,12 +60,10 @@ def load_pkgs_info(d):
 python() {
     import json
     pkginfo = load_pkgs_info(d)
-    #bb.warn("PKGINFO = "+json.dumps(pkginfo))
 
     for p in pkginfo['PKGMAP']:
         d.appendVar('SRC_URI', " file://${PREBUILT_DIR}/"+p+";subdir=${PN}-${PV}")
     srcuri = d.getVar('SRC_URI', False)
-    #bb.warn("SRC_URI: "+srcuri)
 
     for v in [ 'SECTION', 'MAINTAINER', 'DESCRIPTION', 'PROVIDES' ]:
         if pkginfo[v]:
@@ -76,10 +74,8 @@ python() {
             d.setVar(k, pkginfo[k])
         elif k.startswith('RPROVIDES_'):
             d.setVar(k, pkginfo[k])
-            #bb.warn("%s: %s" % (k, pkginfo[k]))
         elif k.startswith('FILES_'):
             d.setVar(k, pkginfo[k])
-            #bb.warn("%s: %s" % (k, pkginfo[k]))
     
     lic_pkg = d.getVar('IMPORT_LICENSE_PKGNAME', True)
     if lic_pkg:

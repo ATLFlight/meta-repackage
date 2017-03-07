@@ -44,7 +44,7 @@ python do_package_write_prebuilt() {
             shutil.copyfile(p, os.path.join(destdir, p))
             pkg = p.split("_")[0]
             if pkg not in packages:
-                bb.warn("REMAPPED PACKAGE: "+p)
+                bb.debug("REMAPPED PACKAGE: "+p)
             pkgs.append(p)
     os.chdir(curdir)
     info = {}
@@ -56,7 +56,6 @@ python do_package_write_prebuilt() {
     info['PROVIDES'] = ' '.join(d.getVar('PROVIDES', True).split())
 
     for p in packages.split():
-        #bb.warn("Checking RDEPENDS_"+p)
         rdepends = d.getVar('RDEPENDS_'+p, True)
         if rdepends:
             info['RDEPENDS_'+p] = ' '.join(rdepends.split())
